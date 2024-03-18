@@ -21,5 +21,5 @@ Characters:
 Most of these roles and playbooks are assumed to be ran from either tkk-laptop or tkk-office to configure singed and any containers or virtuals which live on singed.
 
 FAQ
-Why singed? 
-I have played League of Legends long enough to become the villain. https://www.leagueoflegends.com/en-pl/champions/singed/
+- Why singed? 
+  - I have played League of Legends long enough to become the villain. https://www.leagueoflegends.com/en-pl/champions/singed/
