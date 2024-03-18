@@ -1,0 +1,8 @@
+---
+# tasks file for podman
+
+ - name: Install podman
+   dnf:
+     name: podman
+     state: present
+     

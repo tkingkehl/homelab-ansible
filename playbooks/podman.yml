@@ -1,0 +1,12 @@
+---
+# Fully installs and configures podman.
+
+  - name: podman
+    hosts: physical
+    remote_user: tkk
+    become: true
+
+    roles:
+      - podman
+
+    
