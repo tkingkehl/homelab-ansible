@@ -1,0 +1,62 @@
+---
+# This playbook is me learning how to pull Ansible extra variables from a separate json file. 
+# It pulls filesystem info from ans_tkk.json and creates said filesystem on a USB drive plugged into singed. 
+# I need extra disk...
+  - name: filesystems
+    hosts: singed
+    remote_user: tkk
+    become: true
+
+    tasks: 
+      - name: Get variables.
+        ansible.builtin.include_vars:
+          file: /home/tkk/homelab-ansible/vars/ans_tkk.json
+          name: filesystems
+
+      - name: Show variables. 
+        ansible.builtin.debug: 
+          var: filesystems
+
+      - name: Show lv's. 
+        ansible.builtin.debug:
+          msg: "{{ item.lv }}"
+        loop: "{{ filesystems.filesystems }}"
+
+      - name: Create lv's. 
+        community.general.lvol: 
+          resizefs: true
+          shrink: false
+          lv: "{{ item.lv }}"
+          vg: "tkkusb"
+          size: "{{ item.size }}"
+        loop: "{{ filesystems.filesystems }}"
+
+      - name: Create xfs filesystems. 
+        community.general.filesystem: 
+          resizefs: true
+          fstype: xfs
+          force: true
+          dev: "/dev/mapper/tkkusb-{{ item.lv }}"
+        loop: "{{ filesystems.filesystems }}"
+
+      - name: Create directories. 
+        ansible.builtin.file:
+          owner: "tkk"
+          group: "tkk"
+          mode: "0755"
+          state: directory
+          path: "{{ item.path }}"
+        loop: "{{ filesystems.filesystems }}"
+
+      - name: Mount filesystems. 
+        ansible.posix.mount: 
+          fstype: xfs
+          opts: defaults
+          state: mounted
+          path: "{{ item.path }}"
+          src: "/dev/mapper/tkkusb-{{ item.lv }}"
+        loop: "{{ filesystems.filesystems }}"
+
+      - name: Run systemctl daemon_reload. 
+        ansible.builtin.systemd_service:
+          daemon_reload: true

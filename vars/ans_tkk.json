@@ -1,0 +1,14 @@
+{
+    "filesystems": [
+      {
+        "lv": "tkk1", 
+        "path": "/tkkusb1",
+        "size": "1G"
+      }, 
+      {
+        "lv": "tkk2", 
+        "path": "/tkkusb2",
+        "size": "2G"
+      }
+    ]
+  }
