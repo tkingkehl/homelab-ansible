@@ -1,0 +1,14 @@
+---
+# This playbook contains tasks which sets up and configures the mlb-led-scoreboard software on my raspberry pi zero.
+# Go Royals? We suck.
+- name: mlb_led_scoreboard
+  hosts: tkk-pi-zero
+  remote_user: tkk
+  become: true
+
+  tasks:
+    # Need to add tasks for:
+    # installing git, mlb-led-scoreboard
+    # creating systemd unit
+    #
+...

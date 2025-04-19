@@ -1,0 +1,17 @@
+---
+# This playbook contains tasks that sets up a new 'server' in my homelab environment.
+- name: server_setup
+  hosts: all
+  remote_user: tkk
+  become: true
+
+  tasks:
+    # Need tasks for:
+    # SSH
+    # packages
+    # bashrc/bashprofile
+    # sudoers
+    #
+
+
+...
